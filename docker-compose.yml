@@ -1,0 +1,14 @@
+version: '3'
+services:
+  daap:
+    build:  
+      context: .
+      dockerfile: Dockerfile
+    ports: 
+      - '3689:3689'
+    volumes:
+      - '/srv/daap/config:/config'
+      - '/srv/daap/music:/music'
+      - '/srv/daap/var/log:/var/log'
+    tty: true
+
