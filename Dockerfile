@@ -10,8 +10,14 @@ RUN apt-get update -y && \
 
 
 ADD src/forked-daapd.conf /etc/forked-daapd.conf
+ADD src/start.sh /start.sh
 
-#RUN systemctl start forked-daapd.service && \
-RUN	systemctl enable forked-daapd.service
+RUN chmod +x /start.sh 
+RUN systemctl enable forked-daapd.service
 
 ENTRYPOINT ["/bin/bash"]
+
+# exit 0 なら healthy
+HEALTHCHECK CMD nc -zv localhost 3689 || exit 1
+
+CMD ["/start.sh"]
